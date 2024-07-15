@@ -21,7 +21,7 @@ start_time = None
 # Разница во времени с сервером (в часах)
 time_offset = datetime.timedelta(hours=3)
 # ID администратора для отправки уведомлений
-admin_chat_id = "305643356"
+admin_chat_id = "ADMIN_CHAT_ID"
 # Словарь для отслеживания состояния команды /start для каждого пользователя
 users_started = {}
 
@@ -68,7 +68,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 def main() -> None:
     # Создаем экземпляр ApplicationBuilder и передаем ему токен вашего бота
-    application = ApplicationBuilder().token("7467456150:AAEt7OkfDOLHyCk9li4AhTnmRwnrvgq6kiU").build()
+    application = ApplicationBuilder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
 
     # Регистрируем обработчик команды /start
     application.add_handler(CommandHandler("start", start))

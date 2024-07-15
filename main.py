@@ -11,12 +11,17 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+#Добавляем обработчик команды для получения chat_id
+async def get_chat_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    chat_id = update.message.chat_id
+    await update.message.reply_text(f"Ваш chat_id: {chat_id}")
+
 # Глобальная переменная для отслеживания времени старта
 start_time = None
 # Разница во времени с сервером (в часах)
 time_offset = datetime.timedelta(hours=3)
 # ID администратора для отправки уведомлений
-admin_chat_id = "ADMIN_CHAT_ID"
+admin_chat_id = "305643356"
 # Словарь для отслеживания состояния команды /start для каждого пользователя
 users_started = {}
 
@@ -56,15 +61,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await context.bot.send_message(chat_id=admin_chat_id, text=error_message)
             raise e  # Повторно генерируем исключение, чтобы оно не прошло незамеченным
 
+
+
     # Запускаем задачу для отправки сообщений каждые 60 минут
     asyncio.create_task(send_message())
 
 def main() -> None:
     # Создаем экземпляр ApplicationBuilder и передаем ему токен вашего бота
-    application = ApplicationBuilder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
+    application = ApplicationBuilder().token("7467456150:AAEt7OkfDOLHyCk9li4AhTnmRwnrvgq6kiU").build()
 
     # Регистрируем обработчик команды /start
     application.add_handler(CommandHandler("start", start))
+
+    # Регистрируем обработчик команды /get_chat_id
+    application.add_handler(CommandHandler("get_chat_id", get_chat_id))
 
     # Запускаем бота
     application.run_polling()
